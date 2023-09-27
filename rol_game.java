@@ -3,62 +3,61 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-class Jugador  implements Comparable<Jugador> {
+class Player implements Comparable<Player> {
     protected String id;
-    protected int horasJuego;
-    protected int puntosLogro;
+    protected int gameHours;
+    protected int gameScore;
 
-    public Jugador(int horasJuego, int puntosLogro) {
+    public Player(int gameHours, int gameScore) {
         this.id = String.valueOf(Math.random());
-        this.horasJuego = horasJuego;
-        this.puntosLogro = puntosLogro;
+        this.gameHours = gameHours;
+        this.gameScore = gameScore;
     }
 
-
     @Override
-    public int compareTo(Jugador jugador) {
-        if (this.horasJuego < jugador.horasJuego) return -1;
-        else if (this.horasJuego > jugador.horasJuego) return 1;
-        return jugador.puntosLogro - this.puntosLogro;
+    public int compareTo(Player player) {
+        if (this.gameHours < player.gameHours) return -1;
+        else if (this.gameHours > player.gameHours) return 1;
+        return player.gameScore - this.gameScore;
     }
 
     public String toString() {
-        return id + horasJuego + puntosLogro;
+        return id + gameHours + gameScore;
     }
 }
 
-class Servidor {
-    protected List<Jugador> jugadores;
-    protected Queue<Jugador> jugadoresEnEspera;
+class Server {
+    protected List<Player> playerList;
+    protected Queue<Player> playerQueue;
 
-    public Servidor(List<Jugador> jugadores) {
-        this.jugadores = jugadores;
-        jugadoresEnEspera = new PriorityQueue<>(jugadores);
+    public Server(List<Player> playerList) {
+        this.playerList = playerList;
+        playerQueue = new PriorityQueue<>(playerList);
     }
 
-    public List<Jugador> estadoCola() {
-        List<Jugador> estado = new ArrayList<>();
+    public List<Player> queueState() {
+        List<Player> state = new ArrayList<>();
 
-        while (!jugadoresEnEspera.isEmpty()) {
-            estado.add(jugadoresEnEspera.poll());
-        }
-        return estado;
+        while (!playerQueue.isEmpty())
+            state.add(playerQueue.poll());
+
+        return state;
     }
 }
 
 
-public class rolGame {
+public class rol_game {
     public static void main(String[] args) {
-        Servidor s0 = new Servidor(
+        Server s0 = new Server(
                 List.of(
-                        new Jugador(100, 20),
-                        new Jugador(50, 20),
-                        new Jugador(200, 20),
-                        new Jugador(100, 60)
+                        new Player(100, 20),
+                        new Player(50, 20),
+                        new Player(200, 20),
+                        new Player(100, 60)
                 )
         );
 
-        List <Jugador> sol = s0.estadoCola();
+        List<Player> sol = s0.queueState();
         System.out.println(sol);
     }
 }

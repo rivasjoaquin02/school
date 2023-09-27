@@ -1,66 +1,66 @@
 import java.util.List;
 import java.util.PriorityQueue;
 
-class Soldado implements Comparable<Soldado>{
-    protected int fuerza;
-    protected String nombre;
+class Soldier implements Comparable<Soldier> {
+    protected int strength;
+    protected String name;
 
-    Soldado(String nombre, int fuerza) {
-        this.fuerza = fuerza;
-        this.nombre = nombre;
+    Soldier(String name, int strength) {
+        this.strength = strength;
+        this.name = name;
     }
 
     @Override
-    public int compareTo(Soldado o) {
-        return o.fuerza - this.fuerza;
+    public int compareTo(Soldier o) {
+        return o.strength - this.strength;
     }
 }
 
 class Konoha {
-    protected List<Soldado> listaSoldados;
+    protected List<Soldier> soldierList;
 
-    public Konoha(List<Soldado> soldados) {
-        this.listaSoldados = soldados;
+    public Konoha(List<Soldier> soldiers) {
+        this.soldierList = soldiers;
     }
 
-//    O(nlogm)
-    public int derrotarPain(int painVida) {
-        PriorityQueue<Soldado> pq = new PriorityQueue<>(listaSoldados);
+    //    O(nlog(m))
+    public int defeatPain(int painLife) {
+        PriorityQueue<Soldier> pq = new PriorityQueue<>(soldierList);
 
-        int numeroAtaques = 0;
-        while (painVida >= 0 && !pq.isEmpty()) {
-            Soldado soldado = pq.poll();
+        int amountAttacks = 0;
+        while (painLife >= 0 && !pq.isEmpty()) {
+            Soldier soldier = pq.poll();
 
-            while (soldado.fuerza > 0) {
-                numeroAtaques++;
+            while (soldier.strength > 0) {
+                amountAttacks++;
 
-                if (painVida - soldado.fuerza <= 0){
-                    System.out.println("Victoria");
-                    return numeroAtaques;
+                if (painLife - soldier.strength <= 0) {
+                    System.out.println("Victory");
+                    return amountAttacks;
                 }
 
-                painVida -= soldado.fuerza;
-                soldado.fuerza /= 2;
+                painLife -= soldier.strength;
+                soldier.strength /= 2;
             }
         }
-        System.out.println("Evacuen");
+        System.out.println("Evacuee");
         return -1;
     }
 
 }
 
 
-public class pain {
+public class pain_confrontation {
     public static void main(String[] args) {
-        Konoha aldeaOculta = new Konoha(
+        Konoha konoha = new Konoha(
                 List.of(
-                        new Soldado("naruto", 150),
-                        new Soldado("shikamaru", 200),
-                        new Soldado("kakashi", 120)
+                        new Soldier("naruto", 150),
+                        new Soldier("Shikamaru", 200),
+                        new Soldier("kakashi", 120)
 //                        new Soldado("pakun", 170)
                 )
         );
 
-        System.out.println(aldeaOculta.derrotarPain(1000));
+        System.out.println(konoha.defeatPain(1000));
     }
 }

@@ -2,67 +2,66 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-class Asesino implements Comparable<Asesino> {
-    protected String nombre;
-    protected int fuerza;
-    protected int destreza;
+class Assassin implements Comparable<Assassin> {
+    protected String name;
+    protected int strength;
+    protected int skill;
 
-    public Asesino(String nombre, int fuerza, int destreza) {
-        this.nombre = nombre;
-        this.fuerza = fuerza;
-        this.destreza = destreza;
+    public Assassin(String name, int strength, int skill) {
+        this.name = name;
+        this.strength = strength;
+        this.skill = skill;
     }
 
-    @Override
-    public int compareTo(Asesino asesino) {
-        return (asesino.fuerza + asesino.destreza) - (this.fuerza + this.destreza);
+    @Override public int compareTo(Assassin assassin) {
+        return (assassin.strength + assassin.skill) - (this.strength + this.skill);
     }
 }
 
-class Simulacion {
-    protected List<Asesino> listaAsesinos;
-    protected int fuerzaTotalTemplarios;
+class Simulation {
+    protected List<Assassin> assassinList;
+    protected int totalStrengthTemplar;
 
-    public Simulacion(List<Asesino> listaAsesinos, int fuerzaTotalTemplarios) {
-        this.listaAsesinos = listaAsesinos;
-        this.fuerzaTotalTemplarios = fuerzaTotalTemplarios;
+    public Simulation(List<Assassin> assassinList, int totalStrengthTemplar) {
+        this.assassinList = assassinList;
+        this.totalStrengthTemplar = totalStrengthTemplar;
     }
 
-    public int derrotarTemplarios() {
-        Queue<Asesino> asesinos = new PriorityQueue<>(listaAsesinos);
+    public int defeatTemplar() {
+        Queue<Assassin> assassins = new PriorityQueue<>(assassinList);
 
-        int cantAtaques = 0;
-        while (fuerzaTotalTemplarios > 0 && !asesinos.isEmpty()) {
-            Asesino asesino = asesinos.poll();
-            while (asesino.fuerza > 0 || asesino.destreza >= 5) {
-                cantAtaques++;
+        int amountAttacks = 0;
+        while (totalStrengthTemplar > 0 && !assassins.isEmpty()) {
+            Assassin assassin = assassins.poll();
+            while (assassin.strength > 0 || assassin.skill >= 5) {
+                amountAttacks++;
 
-                this.fuerzaTotalTemplarios -= (asesino.fuerza + asesino.destreza);
-                if (this.fuerzaTotalTemplarios <= 0) return cantAtaques;
+                this.totalStrengthTemplar -= (assassin.strength + assassin.skill);
+                if (this.totalStrengthTemplar <= 0) return amountAttacks;
 
-                asesino.fuerza /= 2;
-                asesino.destreza -= 10;
+                assassin.strength /= 2;
+                assassin.skill -= 10;
             }
         }
 
-        if (this.fuerzaTotalTemplarios < 0) return cantAtaques;
+        if (this.totalStrengthTemplar < 0) return amountAttacks;
         return -1;
     }
 }
 
-public class simulacionEj {
+public class assassins_creed {
     public static void main(String[] args) {
-        Simulacion s0 = new Simulacion(
+        Simulation s0 = new Simulation(
                 List.of(
-                        new Asesino("Ezio", 150, 100),
-                        new Asesino("Altair", 100, 200),
-                        new Asesino("Desmond", 60, 350),
-                        new Asesino("Rebecca", 100, 120),
-                        new Asesino("Daniel ", 210, 210)
+                        new Assassin("Ezio", 150, 100),
+                        new Assassin("Altair", 100, 200),
+                        new Assassin("Desmond", 60, 350),
+                        new Assassin("Rebecca", 100, 120),
+                        new Assassin("Daniel ", 210, 210)
                 ),
                 10050
         );
 
-        System.out.println(s0.derrotarTemplarios());
+        System.out.println(s0.defeatTemplar());
     }
 }
