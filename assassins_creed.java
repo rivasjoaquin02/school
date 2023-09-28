@@ -33,7 +33,7 @@ class Simulation {
         int amountAttacks = 0;
         while (totalStrengthTemplar > 0 && !assassins.isEmpty()) {
             Assassin assassin = assassins.poll();
-            while (assassin.strength > 0 || assassin.skill >= 5) {
+            while (assassin.strength > 0 && assassin.skill >= 5) {
                 amountAttacks++;
 
                 this.totalStrengthTemplar -= (assassin.strength + assassin.skill);

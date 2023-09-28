@@ -28,7 +28,7 @@ class Konoha {
         PriorityQueue<Soldier> pq = new PriorityQueue<>(soldierList);
 
         int amountAttacks = 0;
-        while (painLife >= 0 && !pq.isEmpty()) {
+        while (painLife > 0 && !pq.isEmpty()) {
             Soldier soldier = pq.poll();
 
             while (soldier.strength > 0) {
