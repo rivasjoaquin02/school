@@ -40,10 +40,10 @@ keyboard:
 
 @@:
     ;cerrar conexion
-    mov al, 20h
-    out 20h, al
-    sti 
-    iret
+    mov al, 20h  ;le manda la instruccion EOI al esclavo
+    out 20h, al  ;cierra con el maestro
+    sti          ;terminamos de atender la instruccion 
+    iret         ;para reiniciar la atencion a las instrucciones
 
 print:
     mov ax, 13h
